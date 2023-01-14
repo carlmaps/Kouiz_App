@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
+
+    <data >
+        <variable
+            name="vieModel"
+            type="com.example.kouizapp.model.KouizModel" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="ui.ResultFragment">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/galaxy"
+            android:gravity="top"
+            android:paddingTop="5dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvResultMsg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:text="Congratulation. You have completed the Kouiz!"
+                android:gravity="center"
+                android:layout_marginBottom="3dp"
+                android:textSize="20sp"
+                android:textStyle="normal"
+                android:textColor="@color/white"
+                />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="314dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="@color/white"
+                android:elevation="5dp"
+                app:cardCornerRadius="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvTotalQuestion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:paddingTop="5dp"
+                        android:text="@string/total_question"
+                        android:textColor="#363A43"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/tvCorrect"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:paddingTop="5dp"
+                        android:text="@string/number_of_correct"
+                        android:textColor="#363A43"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/tvMistake"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:paddingTop="5dp"
+                        android:text="@string/number_of_mistakes"
+                        android:textColor="#363A43"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/tvScore"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:paddingTop="5dp"
+                        android:text="@string/score"
+                        android:textColor="#363A43"
+                        android:textSize="20sp" />
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="160dp"
+                        android:src="@drawable/achievement">
+
+                    </ImageView>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="bottom" >
+
+            <Button
+                android:id="@+id/btnTryAgain"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="5dp"
+                android:textStyle="bold"
+                android:text="Try Again"/>
+
+            <Button
+                android:id="@+id/btnAnalysis"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="20dp"
+                android:textStyle="bold"
+                android:text="Result Analysis"/>
+        </LinearLayout>
+
+    </FrameLayout>
+</layout>

@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Kouiz App</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="total_question">Total Questions: </string>
+    <string name="number_of_correct">Correct Answers: </string>
+    <string name="number_of_mistakes">Number of Mistakes: </string>
+    <string name="score">Total Score: </string>
+    <string name="correct_answer">Answer: </string>
+    <string name="your_answer">Your answer: </string>
+</resources>

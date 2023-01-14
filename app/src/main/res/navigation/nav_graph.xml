@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.kouizapp.ui.HomeFragment"
+        android:label="Home"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/homeFragment_to_questionsFragment"
+            app:destination="@id/questionsFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/questionsFragment"
+        android:name="com.example.kouizapp.ui.QuestionsFragment"
+        android:label="Questions"
+        tools:layout="@layout/fragment_questions" >
+        <action
+            android:id="@+id/questionsFragment_to_resultFragment"
+            app:destination="@id/resultFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+        <action
+            android:id="@+id/questionsFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/resultFragment"
+        android:name="com.example.kouizapp.ui.ResultFragment"
+        android:label="Kouiz Result" >
+        <action
+            android:id="@+id/resultFragment_to_resultAnalysisFragment"
+            app:destination="@id/resultAnalysisFragment" />
+        <action
+            android:id="@+id/resultFragment_to_questionsFragment"
+            app:destination="@id/questionsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/resultAnalysisFragment"
+        android:name="com.example.kouizapp.ui.ResultAnalysisFragment"
+        android:label="Result Analysis"
+        tools:layout="@layout/fragment_result_analysis" >
+        <action
+            android:id="@+id/action_resultAnalysisFragment_to_resultFragment"
+            app:destination="@id/resultFragment" />
+    </fragment>
+</navigation>
