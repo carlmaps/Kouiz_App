@@ -44,6 +44,13 @@ class ResultAnalysisAdapter(private val context: Context, private val dataSource
         rowView.tvRAAnswer.text = dispAnswer
         rowView.tvRAUserAnswer.text= dispUserAns
 
+        if(ans == usrAnswer){
+            rowView.tvRAUserAnswer.setBackgroundColor(context.resources.getColor(R.color.correct))
+        }
+        else{
+            rowView.tvRAUserAnswer.setBackgroundColor(context.resources.getColor(R.color.incorrect))
+        }
+
         return rowView
     }
 }

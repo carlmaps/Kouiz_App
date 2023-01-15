@@ -1,10 +1,12 @@
 package com.example.kouizapp.ui
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
@@ -16,7 +18,9 @@ import com.example.kouizapp.model.KouizModel
 import kotlinx.android.synthetic.main.fragment_questions.*
 import kotlinx.android.synthetic.main.fragment_result.*
 import kotlinx.android.synthetic.main.fragment_result.view.*
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import kotlin.streams.toList
 
 
 class ResultFragment : BaseFragment() {
@@ -25,8 +29,7 @@ class ResultFragment : BaseFragment() {
     private var _binding: FragmentResultBinding? = null
     private val binding get() = _binding!!
 
-    var totalQuestion: Int = 0
-    var correctAns: Int = 0
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,26 +43,10 @@ class ResultFragment : BaseFragment() {
             binding.tvResultMsg.text = resMsg
         }
 
-        sharedViewModel.score.observe(viewLifecycleOwner){
-            val dispScore = binding.tvCorrect.text.toString() + it
-            correctAns = it
-            binding.tvCorrect.text = dispScore
-        }
-
-
-        sharedViewModel.totalQuestion.observe(viewLifecycleOwner){
-            totalQuestion = it
-            val dispScoreRatio = binding.tvScore.text.toString() + correctAns + "/" +it
-            val dispTotalQuestion = binding.tvTotalQuestion.text.toString() + it
-            val dispMistake = binding.tvMistake.text.toString() + "${totalQuestion - correctAns}"
-
-            binding.tvTotalQuestion.text = dispTotalQuestion
-            binding.tvScore.text = dispScoreRatio
-            binding.tvMistake.text = dispMistake
-        }
+        launch { getMetrics(view) }
 
         view.btnTryAgain.setOnClickListener{
-            sharedViewModel.resetQNumberAndScore()
+            sharedViewModel.resetQNumber()
             launch {
                 context?.let {
                     KouizDB(it).questionsDao().clearUserAnsweOption()
@@ -76,22 +63,35 @@ class ResultFragment : BaseFragment() {
         return view
     }
 
-//    override fun onActivityCreated(savedInstanceState: Bundle?) {
-//        super.onActivityCreated(savedInstanceState)
-//        val correct = arguments?.getInt("score")
-//        val total = arguments?.getInt("total")
-//        val mistake = (total?:0) - (correct?: 0)
-//        (tvCorrect.text.toString() + correct.toString()).also { tvCorrect.text = it }
-//        (tvMistake.text.toString() + mistake.toString()).also { tvMistake.text = it }
-//        (tvTotalQuestion.text.toString() + total.toString()).also { tvTotalQuestion.text = it }
-//        (tvScore.text.toString() + correct.toString() + "/" + total.toString()).also { tvScore.text = it }
-//    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true){
             override fun handleOnBackPressed() {}
         })
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    private suspend fun getMetrics(view: View){
+        async {
+            context?.let { it ->
+                val questions = KouizDB(it).questionsDao().getAllQuestion()
+                val total = questions.size
+                val correctAnswers = questions.stream().map { x -> x.answer }.toList()
+                val userAnswers = questions.stream().map { y -> y.user_answer }.toList()
+                val mistake = correctAnswers.filterNot { userAnswers.contains(it) }.size
+
+                //display
+                val dispCorrect = getString(R.string.number_of_correct) + "${total - mistake}"
+                val dispScoreRatio = getString(R.string.score) + "${total - mistake}" + "/" + "$total"
+                val dispTotalQuestion = getString(R.string.total_question) + "$total"
+                val dispMistake = getString(R.string.number_of_mistakes) + "$mistake"
+                binding.tvCorrect.text = dispCorrect
+                binding.tvTotalQuestion.text = dispTotalQuestion
+                binding.tvScore.text = dispScoreRatio
+                binding.tvMistake.text = dispMistake
+
+            }
+        }.await()
     }
 }
 
