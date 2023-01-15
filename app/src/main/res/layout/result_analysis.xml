@@ -37,6 +37,6 @@
         android:gravity="left"
         android:textSize="20sp"
         android:textStyle="normal"
-        android:textColor="@color/correct"
+        android:textColor="#00BFFF"
         />
 </LinearLayout>
