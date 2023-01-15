@@ -45,10 +45,13 @@ class ResultAnalysisAdapter(private val context: Context, private val dataSource
         rowView.tvRAUserAnswer.text= dispUserAns
 
         if(ans == usrAnswer){
+            //set textColor and backgound to make it more visible
             rowView.tvRAUserAnswer.setBackgroundColor(context.resources.getColor(R.color.correct))
+            rowView.tvRAUserAnswer.setTextColor(context.resources.getColor(R.color.incorrect))
         }
         else{
             rowView.tvRAUserAnswer.setBackgroundColor(context.resources.getColor(R.color.incorrect))
+            rowView.tvRAUserAnswer.setTextColor(context.resources.getColor(R.color.incorrect))
         }
 
         return rowView
