@@ -96,6 +96,11 @@ class QuestionsFragment : BaseFragment() {
         }
 
         view.btnPrev.setOnClickListener{
+            if(question.user_answer != null){
+                launch{
+                    getAnswer(view)
+                }
+            }
             sharedViewModel.decrementQNumber()
             loadQuestion(view)
         }
@@ -131,10 +136,6 @@ class QuestionsFragment : BaseFragment() {
                         KouizDB(it).questionsDao().updateUserAnswerOption(strAnswer, selOptId, question.id)
                 }
             }.await()
-        }
-        else{
-            Snackbar.make(view, "Please select an answer before proceeding", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
         }
     }
 

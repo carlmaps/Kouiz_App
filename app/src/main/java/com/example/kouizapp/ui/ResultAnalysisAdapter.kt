@@ -51,7 +51,7 @@ class ResultAnalysisAdapter(private val context: Context, private val dataSource
         }
         else{
             rowView.tvRAUserAnswer.setBackgroundColor(context.resources.getColor(R.color.incorrect))
-            rowView.tvRAUserAnswer.setTextColor(context.resources.getColor(R.color.incorrect))
+            rowView.tvRAUserAnswer.setTextColor(context.resources.getColor(R.color.correct))
         }
 
         return rowView
